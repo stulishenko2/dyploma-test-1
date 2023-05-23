@@ -1,28 +1,31 @@
 import React from 'react';
-import {useField} from 'formik';
-import {Input} from '@mui/material';
+import {Box, Input, TextField} from '@mui/material';
+import {Field, type FieldProps, type FormikValues, useField} from 'formik';
 
-type TextInputProps = {
+export type NumericInputProps = {
 	name: string;
 	label: string;
 };
 
-export const TextInput: React.FC<TextInputProps> = ({name, label, ...restProps}) => {
+export const NumericInput: React.FC<NumericInputProps> = ({name, label}) => {
 	const [field, meta] = useField(name);
 
-	return (<div>
-		<label htmlFor='quantity'>Quantity:</label>
-		<Input
-			type='number'
-			id='quantity'
-			name='quantity'
-			inputProps={{min: '1', max: '10'}}
-			value={quantity}
-			onChange={handleQuantityChange}
-			placeholder='Enter quantity'
-			disabled={false}
-		/>
-	</div>
-	);
+	return <Box display={'flex'} flexDirection={'column'} gap={'10px'}>
+		<Field name={name}>
+			{({field}: FieldProps<FormikValues>) => (
+				<TextField
+					type='number'
+					label={label}
+					size='medium'
+					id={name}
+					variant={'filled'}
+					{...field}
+					error={meta.touched && Boolean(meta.error)}
+				/>
+			)}
+		</Field>
+		{meta.touched && meta.error && <Box color={'red'}>
+			{meta.error}
+		</Box>}
+	</Box>;
 };
-

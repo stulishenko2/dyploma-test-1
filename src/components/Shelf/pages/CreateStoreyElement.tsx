@@ -1,18 +1,20 @@
 import React, {useContext} from 'react';
 import {Form, Formik, type FormikHelpers} from 'formik';
-import {type Storey} from '../../App';
-import {createStoreyValidationSchema} from '../../validations/validations';
+import {type Storey} from '../../../App';
+import {createStoreyValidationSchema} from '../../../validations/validations';
 import {Box, Button, Typography} from '@mui/material';
-import {NumericInput} from '../helpers/TextInput/NumericInput';
-import {SelectField} from '../helpers/CustomSelect/SelectField';
-import {categoryOptions} from '../CreateProductPage/CreateProductPage';
-import {ShelfContext} from '../../contexts';
+import {NumericInput} from '../../helpers/TextInput/NumericInput';
+import {SelectField} from '../../helpers/CustomSelect/SelectField';
+import {categoryOptions} from '../../CreateProductPage/CreateProductPage';
+import {ShelfContext} from '../../../contexts';
+import shortid from 'shortid';
 
 const initialStoreyValues: Storey = {
 	category: '',
 	index: 0,
-	numberOfAcceptableProducts: 0,
+	height: 0,
 	productsAccepted: [],
+	id: '',
 };
 
 export type CreateStoreyElementProps = {
@@ -20,11 +22,13 @@ export type CreateStoreyElementProps = {
 };
 
 export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({amount}) => {
-	const {currentFillingStoreyIndex, setFillingStoreyIndex, setShelfState, storeyList} = useContext(ShelfContext);
+	const {currentFillingStoreyIndex, setFillingStoreyIndex, setStoreyList, storeyList} = useContext(ShelfContext);
 
 	const handleCreateStorey = (values: Storey, {resetForm}: FormikHelpers<Storey>) => {
-		if (setShelfState) {
-			setShelfState(actual => [...actual, values]);
+		const uniqueId: string = shortid.generate();
+		const newStorey = {...values, id: uniqueId};
+		if (setStoreyList) {
+			setStoreyList(actual => [...actual, newStorey]);
 			resetForm();
 			if (setFillingStoreyIndex) {
 				setFillingStoreyIndex(actual => actual + 1);
@@ -47,7 +51,7 @@ export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({amount}
                       Storey number {currentFillingStoreyIndex + 1}
 				</Typography>
 				<Box width={800} display={'flex'} flexDirection={'column'} justifyContent={'center'} gap={'10px'}>
-					<NumericInput name='numberOfAcceptableProducts' label='Enter number of acceptable products' />
+					<NumericInput name='height' label='Enter height' />
 					<SelectField name={'category'} label={'Category'} options={categoryOptions}/>
 					<Button variant={'outlined'} type='submit'>Submit</Button>
 				</Box>
