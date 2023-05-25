@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Drawer, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
+import {Box, Drawer, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import {Dashboard, Home} from '@mui/icons-material';
 import {makeStyles} from '@mui/styles';
 
@@ -24,15 +24,17 @@ export const Sidebar: React.FC = () => {
 		}}
 		anchor='left'
 	>
-		<List>
-			<ListItem button component={Link} to='/shelf'>
-				<ListItemIcon><Home/></ListItemIcon>
-				<ListItemText primary='Home'/>
-			</ListItem>
-			<ListItem button component={Link} to='/create-product'>
-				<ListItemIcon><Dashboard/></ListItemIcon>
-				<ListItemText primary='Create Product'/>
-			</ListItem>
-		</List>
+		<Box paddingTop={'20px'}>
+			<List>
+				<ListItem button component={Link} to='/shelf'>
+					<ListItemIcon><Home/></ListItemIcon>
+					<ListItemText primary='Home'/>
+				</ListItem>
+				<ListItem button component={Link} to='/create-product'>
+					<ListItemIcon><Dashboard/></ListItemIcon>
+					<ListItemText primary='Create Product'/>
+				</ListItem>
+			</List>
+		</Box>
 	</Drawer>;
 };

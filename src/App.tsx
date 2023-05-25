@@ -7,8 +7,7 @@ import {type Product} from './interfaces';
 
 export type Storey = {
 	category: string;
-	index: number;
-	height: number;
+	height?: number;
 	productsAccepted: Product[];
 	id: string;
 };
