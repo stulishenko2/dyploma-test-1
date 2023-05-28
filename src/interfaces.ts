@@ -6,4 +6,5 @@ export type Product = {
 	rank: number;
 	width: number;
 	height: number;
+	file?: File;
 };
