@@ -1,9 +1,17 @@
 import {Box, Button, MenuItem, Modal, TextField, Typography} from '@mui/material';
 import React, {useContext, useState} from 'react';
-import {mockedProducts} from './index';
 import {type Product} from '../../../../interfaces';
 import {type Storey} from '../../../../App';
-import {ShelfAmountContext, type ShelfAmountContextType, ShelfContext, type ShelfContextType} from '../../../../contexts';
+import {
+	ShelfAmountContext,
+	type ShelfAmountContextType,
+	ShelfContext,
+	type ShelfContextType,
+} from '../../../../contexts';
+import firebase from 'firebase/compat';
+import {useProducts} from '../../../../hooks/useProducts';
+import {type ProductG} from '../../../../hooks/useOffersData';
+
 type AddProductModalProps = {
 	isModalOpened: boolean;
 	setIsModalOpened: (val: boolean) => void;
@@ -23,11 +31,13 @@ const style = {
 };
 
 export const AddProductModal: React.FC<AddProductModalProps> = ({setIsModalOpened, isModalOpened, setOpen}) => {
-	const [product, setProduct] = useState<Product | undefined>();
+	const [product, setProduct] = useState<ProductG | undefined>();
 	const {storeyList, setStoreyList} = useContext<ShelfContextType>(ShelfContext);
 	const {width} = useContext<ShelfAmountContextType>(ShelfAmountContext);
 
-	const handleProductSelect = (product: Product) => {
+	const {productsList} = useProducts();
+
+	const handleProductSelect = (product: ProductG) => {
 		setProduct(product);
 	};
 
@@ -93,7 +103,7 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({setIsModalOpene
 					label='Select Product'
 					helperText='Please select product'
 				>
-					{mockedProducts.map(option => (
+					{productsList.map(option => (
 						<MenuItem key={option.name} value={option.name} onClick={() => {
 							handleProductSelect(option);
 						}}>

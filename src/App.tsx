@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import {mainRoutes} from './routes';
@@ -11,6 +11,8 @@ import {getAnalytics} from 'firebase/analytics';
 import {getFirestore} from 'firebase/firestore';
 import {getStorage} from 'firebase/storage';
 import {FirebaseAppProvider} from 'reactfire';
+import {useProducts} from './hooks/useProducts';
+import {ProductG} from "./hooks/useOffersData";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -35,7 +37,7 @@ export const storage = getStorage(app);
 export type Storey = {
 	category: string;
 	height?: number;
-	productsAccepted: Product[];
+	productsAccepted: ProductG[];
 	id: string;
 };
 
@@ -47,6 +49,8 @@ function App() {
 	const router = createBrowserRouter([
 		mainRoutes,
 	]);
+	useProducts();
+
 	return (
 		<FirebaseAppProvider firebaseApp={app}>
 			<ShelfContext.Provider value={{storeyList, setStoreyList, currentFillingStoreyIndex: fillingStoreyIndex, setFillingStoreyIndex}}>
