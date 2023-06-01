@@ -13,6 +13,7 @@ export const mockedProducts: Product[] = [
 		category: 'Fruit',
 		height: 40,
 		width: 20,
+		depth: 20,
 	}, {
 		id: '2',
 		rank: 3,
@@ -20,6 +21,7 @@ export const mockedProducts: Product[] = [
 		category: 'Fruit',
 		height: 40,
 		width: 30,
+		depth: 30,
 	}, {
 		id: '1',
 		rank: 2,
@@ -27,12 +29,13 @@ export const mockedProducts: Product[] = [
 		category: 'Fruit',
 		height: 40,
 		width: 500,
+		depth: 500,
 	},
 ];
 
 type ViewShelfProps = Record<string, unknown>;
 
-export const Index: React.FC<ViewShelfProps> = ({}) => {
+export const Index: React.FC<ViewShelfProps> = () => {
 	const [open, setOpen] = React.useState(false);
 	const [isModalOpened, setIsModalOpened] = useState(false);
 

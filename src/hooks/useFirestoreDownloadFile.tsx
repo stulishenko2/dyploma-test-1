@@ -1,7 +1,6 @@
 import {useState, useEffect, useRef, useCallback} from 'react';
 import {getDownloadURL, ref} from 'firebase/storage';
-import {storage} from "../App";
-
+import {storage} from '../App';
 
 export const useFirestoreDownloadFile = (fullPath = '') => {
 	const [fileUrl, setFileUrl] = useState<string>();

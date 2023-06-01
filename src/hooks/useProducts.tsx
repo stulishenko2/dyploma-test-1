@@ -1,5 +1,5 @@
 import {type ProductG} from './useOffersData';
-import {collection, getDocs, query, where} from 'firebase/firestore';
+import {collection, getDocs, query} from 'firebase/firestore';
 import {firestore} from '../App';
 import {useEffect, useState} from 'react';
 
@@ -20,9 +20,12 @@ export const useProducts = () => {
 	};
 
 	useEffect(() => {
-		void fetchProducts().then(r => {
+		(async () => {
+			await fetchProducts();
+
 			console.log('fetched Products');
-		});
+		})();
 	}, []);
+
 	return {productsList, fetchProducts};
 };

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Box, Button, TextField} from '@mui/material';
+import {Box, Button, TextField, InputAdornment} from '@mui/material';
 import {CreateStoreyElement} from './pages/CreateStoreyElement/CreateStoreyElement';
 import {Index} from './pages/ViewShelf';
 import {ShelfAmountContext, ShelfContext} from '../../contexts';
@@ -11,7 +11,7 @@ export enum OpenedForm {
 export const ShelfPage = () => {
 	const [openedForm, setOpenedForm] = useState<OpenedForm>(OpenedForm.enterAmount);
 	const {storeyList} = useContext(ShelfContext);
-	const {amount, setAmount, width, setWidth} = useContext(ShelfAmountContext);
+	const {amount, setAmount, width, setWidth, depth, setDepth} = useContext(ShelfAmountContext);
 
 	useEffect(() => {
 		if (storeyList.length) {
@@ -29,7 +29,7 @@ export const ShelfPage = () => {
 			default:
 				return <Box display={'flex'} justifyContent={'center'}>
 					<Box width={'600px'} display={'flex'} flexDirection={'column'} gap={'20px'}>
-						<Box fontWeight={"bold"} fontSize={"x-large"}>
+						<Box fontWeight={'bold'} fontSize={'x-large'}>
 							Create Shelf
 						</Box>
 						<TextField
@@ -47,15 +47,35 @@ export const ShelfPage = () => {
 							error={Boolean(amount)}
 						/>
 						<TextField
+							id={'width'}
 							type='number'
 							label={'Enter stand width'}
 							size='medium'
-							id={'width'}
 							variant={'filled'}
 							value={width}
+							InputProps={{
+								inputProps: {min: 10, max: 700},
+								endAdornment: <InputAdornment position='end'>cm</InputAdornment>}}
 							onChange={e => {
 								if (setWidth) {
 									setWidth(Number(e.target.value));
+								}
+							}}
+							error={Boolean(width)}
+						/>
+						<TextField
+							id={'depth'}
+							type='number'
+							label={'Enter depth'}
+							size='medium'
+							InputProps={{
+								inputProps: {min: 20, max: 200},
+								endAdornment: <InputAdornment position='end'>cm</InputAdornment>}}
+							variant={'filled'}
+							value={depth}
+							onChange={e => {
+								if (setDepth) {
+									setDepth(Number(e.target.value));
 								}
 							}}
 							error={Boolean(width)}

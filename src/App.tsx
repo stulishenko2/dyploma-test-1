@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import {mainRoutes} from './routes';
 import {ShelfAmountContext, ShelfContext} from './contexts';
-import {type Product} from './interfaces';
 
 // Import the functions you need from the SDKs you need
 import {initializeApp} from 'firebase/app';
-import {getAnalytics} from 'firebase/analytics';
 import {getFirestore} from 'firebase/firestore';
 import {getStorage} from 'firebase/storage';
 import {FirebaseAppProvider} from 'reactfire';
 import {useProducts} from './hooks/useProducts';
-import {ProductG} from "./hooks/useOffersData";
+import {type ProductG} from './hooks/useOffersData';
+
+// eslint-disable-next-line no-warning-comments
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -30,7 +30,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 export const firestore = getFirestore(app);
 export const storage = getStorage(app);
 
@@ -43,9 +42,10 @@ export type Storey = {
 
 function App() {
 	const [storeyList, setStoreyList] = useState<Storey[]>([]);
-	const [amount, setAmount] = useState<number>(0);
-	const [width, setWidth] = useState<number>(0);
-	const [fillingStoreyIndex, setFillingStoreyIndex] = useState<number>(0);
+	const [amount, setAmount] = useState(0);
+	const [width, setWidth] = useState(10);
+	const [depth, setDepth] = useState(20);
+	const [fillingStoreyIndex, setFillingStoreyIndex] = useState(0);
 	const router = createBrowserRouter([
 		mainRoutes,
 	]);
@@ -54,7 +54,7 @@ function App() {
 	return (
 		<FirebaseAppProvider firebaseApp={app}>
 			<ShelfContext.Provider value={{storeyList, setStoreyList, currentFillingStoreyIndex: fillingStoreyIndex, setFillingStoreyIndex}}>
-				<ShelfAmountContext.Provider value={{amount, setAmount, width, setWidth}}>
+				<ShelfAmountContext.Provider value={{amount, setAmount, width, setWidth, depth, setDepth}}>
 					<div className='App'>
 						<RouterProvider router={router}/>
 					</div>

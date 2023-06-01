@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import {Form, Formik, type FormikValues} from 'formik';
+import {Form, Formik} from 'formik';
+import shortid from 'shortid';
+
 import {SelectField} from '../helpers/CustomSelect/SelectField';
 import {type Product} from '../../interfaces';
 import {TextInput} from '../helpers/TextInput/TextInput';
@@ -12,11 +14,12 @@ import {MyDropzone} from '../Dropzone/CustomDropzone';
 import {useFirestoreUploadFiles} from '../../hooks/useFirestoreUploadFiles';
 
 const initialValues: Product = {
+	id: shortid.generate(),
 	name: '',
 	category: '',
-	id: '',
 	height: 0,
 	width: 0,
+	depth: 0,
 	rank: 0,
 };
 export const categoryOptions = [
@@ -70,7 +73,7 @@ export const CreateProductPage = () => {
 					<NumericInput name='rank' label='Enter rank' />
 					<NumericInput name='width' label='Enter width' />
 					<NumericInput name='height' label='Enter height' />
-					<NumericInput name='id' label='Enter code' />
+					<NumericInput name='depth' label='Enter depth' />
 					<SelectField name={'category'} label={'Category'} options={categoryOptions}/>
 					<MyDropzone />
 					<Button variant={'outlined'} type='submit'>Submit</Button>

@@ -61,21 +61,18 @@ export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({amount}
 			}}
 		>
 			<Formik onSubmit={handleCreateStorey} validationSchema={createStoreyValidationSchema} enableReinitialize={true} initialValues={initialStoreyValues}>
-				{() => (
-					<Form style={{margin: '15px auto'}}>
-						<Box display={'flex'} flexDirection={'column'} gap={'20px'}>
-							<Typography variant={'h3'} component={'h3'} align={'center'}>
+				<Form style={{margin: '15px auto'}}>
+					<Box display={'flex'} flexDirection={'column'} gap={'20px'}>
+						<Typography variant={'h3'} component={'h3'} align={'center'}>
                       Storey number {currentFillingStoreyIndex + 1}
-							</Typography>
-							<Box width={800} display={'flex'} flexDirection={'column'} justifyContent={'center'} gap={'10px'}>
-								<NumericInput name='height' label='Enter height' />
-								<SelectField name={'category'} label={'Category'} options={categoryOptions}/>
-								<Button variant={'outlined'} type='submit'>Submit</Button>
-							</Box>
+						</Typography>
+						<Box width={800} display={'flex'} flexDirection={'column'} justifyContent={'center'} gap={'10px'}>
+							<NumericInput name='height' label='Enter height' />
+							<SelectField name={'category'} label={'Category'} options={categoryOptions}/>
+							<Button variant={'outlined'} type='submit'>Submit</Button>
 						</Box>
-					</Form>
-				)
-				}
+					</Box>
+				</Form>
 			</Formik>
 		</Box>
 	</Modal>;

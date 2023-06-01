@@ -1,6 +1,5 @@
 import {Box, Divider, Typography} from '@mui/material';
 import React, {useContext} from 'react';
-import {type Storey} from '../../../../App';
 import {ShelfContext, type ShelfContextType} from '../../../../contexts';
 import RemoveIcon from '@mui/icons-material/Remove';
 
