@@ -12,9 +12,9 @@ import {addDoc, collection} from 'firebase/firestore';
 import {firestore} from '../../App';
 import {MyDropzone} from '../Dropzone/CustomDropzone';
 import {useFirestoreUploadFiles} from '../../hooks/useFirestoreUploadFiles';
+type InitialProduct = Omit<Product, 'id'>;
 
-const initialValues: Product = {
-	id: shortid.generate(),
+const initialValues: InitialProduct = {
 	name: '',
 	category: '',
 	height: 0,
@@ -22,6 +22,7 @@ const initialValues: Product = {
 	depth: 0,
 	rank: 0,
 };
+
 export const categoryOptions = [
 	{
 		label: 'Fruit',
@@ -43,7 +44,7 @@ export const CreateProductPage = () => {
 	const [open, setOpen] = useState(false);
 	const {upload} = useFirestoreUploadFiles();
 
-	const createProduct = async (values: Product) => {
+	const createProduct = async (values: InitialProduct) => {
 		console.log(values, 'values');
 		if (!values.file) {
 			return;
@@ -52,7 +53,7 @@ export const CreateProductPage = () => {
 		await upload(values.file).then(uploadResponse => {
 			console.log(uploadResponse, 'uploadResponse');
 			delete values.file;
-			const requestProduct: Omit<Product, 'file'> & {fullPath: string} = {...values, fullPath: uploadResponse?.fullPath ?? ''};
+			const requestProduct: Omit<Product, 'file'> & {fullPath: string} = {...values, id: shortid.generate(), fullPath: uploadResponse?.fullPath ?? ''};
 			return requestProduct;
 		}).then(async requestProduct => {
 			await addDoc(ref, requestProduct).then(() => {
@@ -65,7 +66,7 @@ export const CreateProductPage = () => {
 		});
 	};
 
-	return <Formik<Product> initialValues={initialValues} validationSchema={createProductValidationSchema} onSubmit={createProduct}>
+	return <Formik initialValues={initialValues} validationSchema={createProductValidationSchema} onSubmit={createProduct}>
 		{() => (
 			<Form style={{margin: '15px auto'}}>
 				<Box width={800} display={'flex'} flexDirection={'column'} justifyContent={'center'} gap={'10px'}>

@@ -1,6 +1,6 @@
 import {useCallback, useState} from 'react';
 import {ref as refStorage, uploadBytesResumable} from 'firebase/storage';
-import {storage} from "../App";
+import {storage} from '../App';
 
 export const useFirestoreUploadFiles = () => {
 	const [isLoading, setIsLoading] = useState(false);
