@@ -7,7 +7,7 @@ import {type Product} from '../../interfaces';
 import {TextInput} from '../helpers/TextInput/TextInput';
 import {NumericInput} from '../helpers/TextInput/NumericInput';
 import {createProductValidationSchema} from '../../validations/validations';
-import {Box, Button, IconButton, Snackbar, SnackbarContent} from '@mui/material';
+import {Box, Button, IconButton, InputAdornment, Snackbar, SnackbarContent} from '@mui/material';
 import {addDoc, collection} from 'firebase/firestore';
 import {firestore} from '../../App';
 import {MyDropzone} from '../Dropzone/CustomDropzone';
@@ -38,6 +38,11 @@ export const categoryOptions = [
 		value: 'Drinks',
 	},
 ];
+
+const inputCustomProps = {
+	inputProps: {min: 0, max: 700},
+	endAdornment: <InputAdornment position='end'>cm</InputAdornment>,
+};
 
 export const CreateProductPage = () => {
 	const ref = collection(firestore, 'sectors');
@@ -72,9 +77,9 @@ export const CreateProductPage = () => {
 				<Box width={800} display={'flex'} flexDirection={'column'} justifyContent={'center'} gap={'10px'}>
 					<TextInput name='name' label='Enter name' />
 					<NumericInput name='rank' label='Enter rank' />
-					<NumericInput name='width' label='Enter width' />
-					<NumericInput name='height' label='Enter height' />
-					<NumericInput name='depth' label='Enter depth' />
+					<NumericInput name='width' label='Enter width' customProps={inputCustomProps} />
+					<NumericInput name='height' label='Enter height' customProps={inputCustomProps} />
+					<NumericInput name='depth' label='Enter depth' customProps={inputCustomProps} />
 					<SelectField name={'category'} label={'Category'} options={categoryOptions}/>
 					<MyDropzone />
 					<Button variant={'outlined'} type='submit'>Submit</Button>
