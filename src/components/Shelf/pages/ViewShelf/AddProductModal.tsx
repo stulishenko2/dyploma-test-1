@@ -1,6 +1,5 @@
 import {Box, Button, MenuItem, Modal, TextField, Typography} from '@mui/material';
 import React, {useContext, useState} from 'react';
-import {type Product} from '../../../../interfaces';
 import {type Storey} from '../../../../App';
 import {
 	ShelfAmountContext,
@@ -8,7 +7,6 @@ import {
 	ShelfContext,
 	type ShelfContextType,
 } from '../../../../contexts';
-import firebase from 'firebase/compat';
 import {useProducts} from '../../../../hooks/useProducts';
 import {type ProductG} from '../../../../hooks/useOffersData';
 

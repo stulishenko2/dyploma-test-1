@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Form, Formik} from 'formik';
 import {type Storey} from '../../../../App';
 import {createStoreyValidationSchema} from '../../../../validations/validations';
-import {Box, Button, Modal, Typography} from '@mui/material';
+import {Box, Button, InputAdornment, Modal, Typography} from '@mui/material';
 import {NumericInput} from '../../../helpers/TextInput/NumericInput';
 import {SelectField} from '../../../helpers/CustomSelect/SelectField';
 import {categoryOptions} from '../../../CreateProductPage/CreateProductPage';
@@ -17,6 +17,11 @@ const initialStoreyValues: Storey = {
 
 export type CreateStoreyElementProps = {
 	storeyAmount?: number;
+};
+
+const inputCustomProps = {
+	inputProps: {min: 10, max: 700},
+	endAdornment: <InputAdornment position='end'>cm</InputAdornment>,
 };
 
 export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({storeyAmount}) => {
@@ -51,7 +56,7 @@ export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({storeyA
 		}
 	};
 
-	return <Modal open={open}>
+	return <Modal open={open} onClose={() => setOpen(false)}>
 		<Box
 			sx={{
 				position: 'absolute',
@@ -70,7 +75,8 @@ export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({storeyA
                       Storey number {currentFillingStoreyIndex + 1}
 						</Typography>
 						<Box width={800} display={'flex'} flexDirection={'column'} justifyContent={'center'} gap={'10px'}>
-							<NumericInput name='height' label='Enter height' />
+							<NumericInput name='height' label='Enter height' customProps={inputCustomProps}/>
+							<NumericInput name='depth' label='Enter depth' customProps={inputCustomProps}/>
 							<SelectField name={'category'} label={'Category'} options={categoryOptions}/>
 							<Button variant={'outlined'} type='submit'>Submit</Button>
 						</Box>
