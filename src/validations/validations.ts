@@ -9,5 +9,4 @@ export const createProductValidationSchema = Yup.object({
 export const createStoreyValidationSchema = Yup.object({
 	category: Yup.string().required('Category is required'),
 	height: Yup.number().required('Height is required'),
-	depth: Yup.number().required('Depth is required'),
 });

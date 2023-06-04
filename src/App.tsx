@@ -42,7 +42,7 @@ export type Storey = {
 
 function App() {
 	const [storeyList, setStoreyList] = useState<Storey[]>([]);
-	const [amount, setAmount] = useState(0);
+	const [storeyAmount, setStoreyAmount] = useState(0);
 	const [width, setWidth] = useState(10);
 	const [depth, setDepth] = useState(20);
 	const [fillingStoreyIndex, setFillingStoreyIndex] = useState(0);
@@ -54,7 +54,7 @@ function App() {
 	return (
 		<FirebaseAppProvider firebaseApp={app}>
 			<ShelfContext.Provider value={{storeyList, setStoreyList, currentFillingStoreyIndex: fillingStoreyIndex, setFillingStoreyIndex}}>
-				<ShelfAmountContext.Provider value={{amount, setAmount, width, setWidth, depth, setDepth}}>
+				<ShelfAmountContext.Provider value={{setStoreyAmount, storeyAmount, width, setWidth, depth, setDepth}}>
 					<div className='App'>
 						<RouterProvider router={router}/>
 					</div>

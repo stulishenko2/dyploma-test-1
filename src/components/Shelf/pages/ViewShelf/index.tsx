@@ -1,9 +1,10 @@
 import {Box, Button, IconButton, Snackbar, SnackbarContent} from '@mui/material';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {type Product} from '../../../../interfaces';
 import {AddProductModal} from './AddProductModal';
-import {ShelfView} from './ShelfView';
+import {ShelfView, sortedStoreys} from './ShelfView';
 import {Basket} from './Basket';
+import {ShelfContext} from '../../../../contexts';
 
 export const mockedProducts: Product[] = [
 	{
@@ -38,9 +39,15 @@ type ViewShelfProps = Record<string, unknown>;
 export const Index: React.FC<ViewShelfProps> = () => {
 	const [open, setOpen] = React.useState(false);
 	const [isModalOpened, setIsModalOpened] = useState(false);
-
+	const {storeyList, setStoreyList} = useContext(ShelfContext);
 	const openPopup = () => {
 		setIsModalOpened(true);
+	};
+
+	const sortSectorsByRank = () => {
+		if (setStoreyList) {
+			setStoreyList([...sortedStoreys(storeyList)]);
+		}
 	};
 
 	return <Box width={'100%'}>
@@ -54,6 +61,7 @@ export const Index: React.FC<ViewShelfProps> = () => {
 			</Box>
 		</Box>
 		<Button variant={'outlined'} onClick={openPopup}>Add Product</Button>
+		<Button variant={'outlined'} onClick={sortSectorsByRank}>Sort Sectors By Ranks</Button>
 		<Box>
 			<Snackbar
 				anchorOrigin={{

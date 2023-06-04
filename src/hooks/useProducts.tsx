@@ -15,7 +15,6 @@ export const useProducts = () => {
 
 		// Convert the documents to the expected type (ProductG)
 		const products: ProductG[] = querySnapshot.docs.map(doc => doc.data() as ProductG);
-		console.log(products, 'products');
 		setProductsList(products);
 	};
 

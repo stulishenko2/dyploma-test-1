@@ -3,16 +3,17 @@ import {Box, Button, TextField, InputAdornment} from '@mui/material';
 import {CreateStoreyElement} from './pages/CreateStoreyElement/CreateStoreyElement';
 import {Index} from './pages/ViewShelf';
 import {ShelfAmountContext, ShelfContext} from '../../contexts';
+import {Notification} from '../Notification/Notification';
 
 export enum OpenedForm {
-	enterAmount = 'enter-amount',
+	enterAmount = 'enter-setStoreyAmount',
 	fillStorey = 'fill-storey',
 }
 export const ShelfPage = () => {
 	const [openedForm, setOpenedForm] = useState<OpenedForm>(OpenedForm.enterAmount);
 	const {storeyList} = useContext(ShelfContext);
-	const {amount, setAmount, width, setWidth, depth, setDepth} = useContext(ShelfAmountContext);
-
+	const {setStoreyAmount, storeyAmount, width, setWidth, depth, setDepth} = useContext(ShelfAmountContext);
+	const [notificationOpen, setNotificationOpen] = useState(false);
 	useEffect(() => {
 		if (storeyList.length) {
 			setOpenedForm(OpenedForm.fillStorey);
@@ -23,7 +24,7 @@ export const ShelfPage = () => {
 			case OpenedForm.fillStorey:
 				return <Box width={'100%'}>
 					<Index/>
-					<CreateStoreyElement amount={amount}/>
+					<CreateStoreyElement storeyAmount={storeyAmount}/>
 				</Box>;
 			case OpenedForm.enterAmount:
 			default:
@@ -36,15 +37,15 @@ export const ShelfPage = () => {
 							type='number'
 							label={'Enter yarus amount'}
 							size='medium'
-							id={'amount'}
+							id={'setStoreyAmount'}
 							variant={'filled'}
-							value={amount}
+							value={storeyAmount}
 							onChange={e => {
-								if (setAmount) {
-									setAmount(Number(e.target.value));
+								if (setStoreyAmount) {
+									setStoreyAmount(Number(e.target.value));
 								}
 							}}
-							error={Boolean(amount)}
+							error={Boolean(setStoreyAmount)}
 						/>
 						<TextField
 							id={'width'}
@@ -81,9 +82,14 @@ export const ShelfPage = () => {
 							error={Boolean(width)}
 						/>
 						<Button onClick={() => {
-							setOpenedForm(OpenedForm.fillStorey);
+							if (!storeyAmount || !width) {
+								setNotificationOpen(true);
+							} else {
+								setOpenedForm(OpenedForm.fillStorey);
+							}
 						}}>Submit</Button>
 					</Box>
+					<Notification setOpen={setNotificationOpen} open={notificationOpen} msg={'Fill all fields'}/>
 				</Box>;
 		}
 	};

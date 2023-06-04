@@ -25,17 +25,25 @@ const initialValues: InitialProduct = {
 
 export const categoryOptions = [
 	{
-		label: 'Fruit',
-		value: 'Fruit',
+		label: 'Grocery',
+		value: 'Grocery',
 	}, {
-		label: 'Vegetable',
-		value: 'Vegetable',
+		label: 'Snacks',
+		value: 'Snacks',
 	}, {
-		label: 'Nuts',
-		value: 'Nuts',
+		label: 'Sweets',
+		value: 'sweets',
 	}, {
 		label: 'Drinks',
 		value: 'Drinks',
+	},
+	{
+		label: 'Milk products',
+		value: 'Milk products',
+	},
+	{
+		label: 'Chemistry',
+		value: 'Chemistry',
 	},
 ];
 
@@ -51,7 +59,6 @@ export const CreateProductPage = () => {
 		}
 
 		await upload(values.file).then(uploadResponse => {
-			console.log(uploadResponse, 'uploadResponse');
 			delete values.file;
 			const requestProduct: Omit<Product, 'file'> & {fullPath: string} = {...values, id: shortid.generate(), fullPath: uploadResponse?.fullPath ?? ''};
 			return requestProduct;

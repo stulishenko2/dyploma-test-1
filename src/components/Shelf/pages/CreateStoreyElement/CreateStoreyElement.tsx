@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Form, Formik} from 'formik';
 import {type Storey} from '../../../../App';
 import {createStoreyValidationSchema} from '../../../../validations/validations';
@@ -16,23 +16,30 @@ const initialStoreyValues: Storey = {
 };
 
 export type CreateStoreyElementProps = {
-	amount?: number;
+	storeyAmount?: number;
 };
 
-export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({amount}) => {
+export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({storeyAmount}) => {
 	const {currentFillingStoreyIndex, setFillingStoreyIndex, setStoreyList, storeyList} = useContext(ShelfContext);
 	const [open, setOpen] = useState(true);
 
-	const handleClose = () => {
-		setOpen(false);
-	};
+	useEffect(() => {
+		if (storeyList.length === storeyAmount) {
+			setOpen(false);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (storeyList.length === storeyAmount) {
+			setOpen(false);
+		}
+	}, [storeyList.length, storeyAmount]);
 
 	const handleCreateStorey = (values: Storey) => {
 		const uniqueId: string = shortid.generate();
 		if (!uniqueId) {
 			throw Error('uniqueId is absent');
 		}
-
 		const newStorey = {...values, id: uniqueId};
 		if (setStoreyList) {
 			setStoreyList(actual => [...actual, newStorey]);
@@ -41,10 +48,6 @@ export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({amount}
 			} else {
 				throw Error('setFillingStoreyIndex is not provided');
 			}
-		}
-
-		if (storeyList.length + 1 === amount) {
-			handleClose();
 		}
 	};
 

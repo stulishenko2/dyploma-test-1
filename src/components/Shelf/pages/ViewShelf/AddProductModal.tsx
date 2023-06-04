@@ -69,6 +69,7 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({setIsModalOpene
 
 			return acum;
 		}, undefined);
+		console.log(appropriateStorey, 'appropriateStorey');
 
 		const newStoreyList = storeyList.map((_val, index) => {
 			if (_val.id === appropriateStorey?.id) {
@@ -78,6 +79,7 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({setIsModalOpene
 
 			return _val;
 		});
+
 		if (setStoreyList) {
 			setStoreyList(newStoreyList);
 		}
