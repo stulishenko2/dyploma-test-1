@@ -56,7 +56,7 @@ export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({amount}
 		// }
 	};
 
-	return <Modal open={open}>
+	return <Modal open={open} onClose={handleClose}>
 		<Box
 			sx={{
 				position: 'absolute',

@@ -1,9 +1,11 @@
 import {Box, Button, IconButton, Snackbar, SnackbarContent} from '@mui/material';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {type Product} from '../../../../interfaces';
 import {AddProductModal} from './AddProductModal';
 import {ShelfView} from './ShelfView';
 import {Basket} from './Basket';
+import {saveStorey} from '../../utils';
+import {ShelfContext, type ShelfContextType} from '../../../../contexts';
 
 export const mockedProducts: Product[] = [
 	{
@@ -36,11 +38,16 @@ export const mockedProducts: Product[] = [
 type ViewShelfProps = Record<string, unknown>;
 
 export const Index: React.FC<ViewShelfProps> = () => {
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const {storeyList} = useContext<ShelfContextType>(ShelfContext);
 	const [isModalOpened, setIsModalOpened] = useState(false);
 
 	const openPopup = () => {
 		setIsModalOpened(true);
+	};
+
+	const handleSaveProducts = async () => {
+		await saveStorey(storeyList);
 	};
 
 	return <Box width={'100%'}>
@@ -54,6 +61,7 @@ export const Index: React.FC<ViewShelfProps> = () => {
 			</Box>
 		</Box>
 		<Button variant={'outlined'} onClick={openPopup}>Add Product</Button>
+		{storeyList.length && <Button variant={'outlined'} onClick={handleSaveProducts}>Save changes</Button>}
 		<Box>
 			<Snackbar
 				anchorOrigin={{
