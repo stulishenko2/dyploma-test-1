@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import {mainRoutes} from './routes';
-import {ShelfAmountContext, ShelfContext} from './contexts';
+import {ShelfAmountContext, ShelfContext, UploadedFilesContext} from './contexts';
 
 // Import the functions you need from the SDKs you need
 import {initializeApp} from 'firebase/app';
@@ -45,6 +45,7 @@ function App() {
 	const [storeyAmount, setStoreyAmount] = useState(0);
 	const [width, setWidth] = useState(10);
 	const [depth, setDepth] = useState(20);
+	const [uploadedFiles, setUploadedFiles] = useState({});
 	const [fillingStoreyIndex, setFillingStoreyIndex] = useState(0);
 	const router = createBrowserRouter([
 		mainRoutes,
@@ -55,9 +56,11 @@ function App() {
 		<FirebaseAppProvider firebaseApp={app}>
 			<ShelfContext.Provider value={{storeyList, setStoreyList, currentFillingStoreyIndex: fillingStoreyIndex, setFillingStoreyIndex}}>
 				<ShelfAmountContext.Provider value={{setStoreyAmount, storeyAmount, width, setWidth, depth, setDepth}}>
-					<div className='App'>
-						<RouterProvider router={router}/>
-					</div>
+					<UploadedFilesContext.Provider value={{uploadedFiles, setUploadedFiles}}>
+						<div className='App'>
+							<RouterProvider router={router}/>
+						</div>
+					</UploadedFilesContext.Provider>
 				</ShelfAmountContext.Provider>
 			</ShelfContext.Provider>
 		</FirebaseAppProvider>

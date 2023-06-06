@@ -15,6 +15,14 @@ export const ShelfAmountContext = createContext<ShelfAmountContextType>({
 	depth: 0,
 });
 
+export type UploadedFilesContextType = {
+	uploadedFiles: Record<string, string>;
+	setUploadedFiles?: (val: Dispatch<SetStateAction<Record<string, string>>>) => void;
+};
+export const UploadedFilesContext = createContext<UploadedFilesContextType>({
+	uploadedFiles: {},
+});
+
 export type ShelfContextType = {
 	storeyList: Storey[];
 	setStoreyList?: Dispatch<SetStateAction<Storey[]>>;

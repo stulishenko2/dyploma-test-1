@@ -1,6 +1,12 @@
 import {Box} from '@mui/material';
 import React, {useContext, useEffect, useMemo} from 'react';
-import {ShelfAmountContext, type ShelfAmountContextType, ShelfContext, type ShelfContextType} from '../../../../contexts';
+import {
+	ShelfAmountContext,
+	type ShelfAmountContextType,
+	ShelfContext,
+	type ShelfContextType, UploadedFilesContext,
+	type UploadedFilesContextType,
+} from '../../../../contexts';
 import {useFirestoreDownloadFile} from '../../../../hooks/useFirestoreDownloadFile';
 import {Image} from '@mui/icons-material';
 import {type ProductG} from '../../../../hooks/useOffersData';
@@ -40,6 +46,7 @@ export type SectorViewProps = {
 
 export const SectorView: React.FC<SectorViewProps> = ({sector, index}) => {
 	const {downloadFile, fileUrl} = useFirestoreDownloadFile();
+	const {uploadedFiles, setUploadedFiles} = useContext<UploadedFilesContextType>(UploadedFilesContext);
 	useEffect(() => {
 		const getImageFromFirestore = async () => {
 			await downloadFile(sector.fullPath);
@@ -50,7 +57,13 @@ export const SectorView: React.FC<SectorViewProps> = ({sector, index}) => {
 		});
 	}, []);
 
+	useEffect(() => {
+		if (fileUrl && setUploadedFiles) {
+			setUploadedFiles(actual => ({...actual, [sector.fullPath]: fileUrl}));
+		}
+	}, [fileUrl]);
+
 	return <Box width={sector.width} height={'100%'} boxSizing='border-box'>
-		<img src={fileUrl} width={'100%'} height={'100%'}/>
+		<img src={uploadedFiles[sector.fullPath] ? uploadedFiles[sector.fullPath] : fileUrl} width={'100%'} height={'100%'}/>
 	</Box>;
 };
