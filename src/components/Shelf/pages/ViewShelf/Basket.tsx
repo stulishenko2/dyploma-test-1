@@ -22,7 +22,7 @@ export const Basket: React.FC<BasketProps> = () => {
 		}
 	};
 
-	return <Box display={'flex'} justifyContent={'space-between'} flexWrap={'wrap'} >
+	return <Box display={'flex'} justifyContent={'space-between'} flexWrap={'wrap'}/* color={'white'} */>
 		{storeyList.map((storey, index) => {
 			const productsAcceptedCopy = [...storey.productsAccepted];
 			return <Box key={index} width={400} margin={'10px'}>

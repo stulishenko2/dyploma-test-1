@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Box, Button, TextField, InputAdornment} from '@mui/material';
 import {CreateStoreyElement} from './pages/CreateStoreyElement/CreateStoreyElement';
-import {Index} from './pages/ViewShelf';
+import {buttonStyle, Index} from './pages/ViewShelf';
 import {ShelfAmountContext, ShelfContext} from '../../contexts';
 import {Notification} from '../Notification/Notification';
 
@@ -29,7 +29,8 @@ export const ShelfPage = () => {
 			case OpenedForm.enterAmount:
 			default:
 				return <Box display={'flex'} justifyContent={'center'}>
-					<Box width={'600px'} display={'flex'} flexDirection={'column'} gap={'20px'}>
+					<Box width={'600px'} display={'flex'} flexDirection={'column'} gap={'20px'} boxShadow='14px 17px 40px 4px gray'
+						 borderRadius='30px' padding="80px">
 						<Box fontWeight={'bold'} fontSize={'x-large'}>
 							Create Shelf
 						</Box>
@@ -81,7 +82,7 @@ export const ShelfPage = () => {
 							}}
 							error={Boolean(width)}
 						/>
-						<Button onClick={() => {
+						<Button variant={'contained'} style={buttonStyle} onClick={() => {
 							if (!storeyAmount || !width) {
 								setNotificationOpen(true);
 							} else {

@@ -12,6 +12,7 @@ import {addDoc, collection} from 'firebase/firestore';
 import {firestore} from '../../App';
 import {MyDropzone} from '../Dropzone/CustomDropzone';
 import {useFirestoreUploadFiles} from '../../hooks/useFirestoreUploadFiles';
+import {buttonStyle} from "../Shelf/pages/ViewShelf";
 type InitialProduct = Omit<Product, 'id'>;
 
 const initialValues: InitialProduct = {
@@ -89,7 +90,7 @@ export const CreateProductPage = () => {
 					<NumericInput name='depth' label='Enter depth' customProps={inputCustomProps} />
 					<SelectField name={'category'} label={'Category'} options={categoryOptions}/>
 					<MyDropzone />
-					<Button variant={'outlined'} type='submit'>Submit</Button>
+					<Button variant={'contained'} style={buttonStyle} type='submit'>Submit</Button>
 					<Box>
 						<Snackbar
 							anchorOrigin={{

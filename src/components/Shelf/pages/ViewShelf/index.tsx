@@ -36,11 +36,14 @@ export const mockedProducts: Product[] = [
 ];
 
 type ViewShelfProps = Record<string, unknown>;
-
+export const buttonStyle = {
+	backgroundColor: '#356c98', // Set your custom color here
+};
 export const Index: React.FC<ViewShelfProps> = () => {
 	const [open, setOpen] = useState(false);
 	const [isModalOpened, setIsModalOpened] = useState(false);
 	const {storeyList, setStoreyList} = useContext(ShelfContext);
+
 	const openPopup = () => {
 		setIsModalOpened(true);
 	};
@@ -65,9 +68,16 @@ export const Index: React.FC<ViewShelfProps> = () => {
 				<Basket/>
 			</Box>
 		</Box>
-		<Button variant={'outlined'} onClick={openPopup}>Add Product</Button>
-		<Button variant={'outlined'} onClick={sortSectorsByRank}>Sort Sectors By Ranks</Button>
-		{storeyList.length && <Button variant={'outlined'} onClick={handleSaveProducts}>Save changes</Button>}
+		<Box display='flex' justifyContent='center'>
+			<Box display='flex' gap='15px' justifyContent='center' width='600px' boxShadow='14px 17px 40px 4px gray'
+				 borderRadius='30px' padding='20px'>
+
+				<Button variant={'contained'} style={buttonStyle} onClick={openPopup}>Add Product</Button>
+				<Button variant={'contained'} style={buttonStyle} onClick={sortSectorsByRank}>Sort Sectors By Ranks</Button>
+				{storeyList.length && <Button variant={'contained'} style={buttonStyle} onClick={handleSaveProducts}>Save changes</Button>}
+			</Box>
+		</Box>
+
 		<Box>
 			<Snackbar
 				anchorOrigin={{

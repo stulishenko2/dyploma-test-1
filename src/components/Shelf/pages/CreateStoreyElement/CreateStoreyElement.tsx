@@ -8,6 +8,7 @@ import {SelectField} from '../../../helpers/CustomSelect/SelectField';
 import {categoryOptions} from '../../../CreateProductPage/CreateProductPage';
 import {ShelfContext} from '../../../../contexts';
 import shortid from 'shortid';
+import {buttonStyle} from "../ViewShelf";
 
 const initialStoreyValues: Storey = {
 	category: '',
@@ -76,9 +77,8 @@ export const CreateStoreyElement: React.FC<CreateStoreyElementProps> = ({storeyA
 						</Typography>
 						<Box width={800} display={'flex'} flexDirection={'column'} justifyContent={'center'} gap={'10px'}>
 							<NumericInput name='height' label='Enter height' customProps={inputCustomProps}/>
-							<NumericInput name='depth' label='Enter depth' customProps={inputCustomProps}/>
 							<SelectField name={'category'} label={'Category'} options={categoryOptions}/>
-							<Button variant={'outlined'} type='submit'>Submit</Button>
+							<Button variant={'contained'} style={buttonStyle} type='submit'>Submit</Button>
 						</Box>
 					</Box>
 				</Form>
